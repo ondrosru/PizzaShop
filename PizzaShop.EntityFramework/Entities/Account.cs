@@ -11,7 +11,6 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public string Username { get; set; }
         [Required]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
         [Required]
         public string Name { get; set; }
@@ -19,12 +18,10 @@ namespace PizzaShop.EntityFramework.Entities
         public string Surname { get; set; }
         public DateTime Birthday { get; set; }
         [Required]
-        [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]
-        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
         public Role Role { get; set; }
