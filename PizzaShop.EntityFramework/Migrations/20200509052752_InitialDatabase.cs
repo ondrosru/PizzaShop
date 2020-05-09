@@ -49,7 +49,9 @@ namespace PizzaShop.EntityFramework.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
+                    ImgPath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,7 +69,10 @@ namespace PizzaShop.EntityFramework.Migrations
                     Surname = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false)
+                    Total = table.Column<decimal>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

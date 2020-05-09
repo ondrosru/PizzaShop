@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PizzaShop.EntityFramework.Entities.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -19,7 +20,11 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public decimal Total { get; set; }
         [Required]
+        public OrderStatus Status { get; set; }
+        [Required]
         public DateTime CreatedAt { get; set; }
+        [Required]
+        public DateTime UpdatedAt { get; set; }
 
         public virtual ICollection<OrderPrice> OrderPrices { get; set; }
         public virtual Account Account { get; set; }

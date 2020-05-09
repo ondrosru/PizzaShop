@@ -1,6 +1,7 @@
 ﻿using PizzaShop.EntityFramework.Entities.Enum;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PizzaShop.EntityFramework.Entities
 {
