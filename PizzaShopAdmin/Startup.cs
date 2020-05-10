@@ -7,7 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PizzaShop.EntityFramework;
 using PizzaShop.EntityFramework.Configuration;
+using PizzaShop.EntityFramework.Entities;
+using PizzaShop.EntityFramework.Repositories;
 using PizzaShopAdmin.Config;
+using PizzaShopAdmin.Services;
 
 namespace PizzaShopAdmin
 {
@@ -29,6 +32,9 @@ namespace PizzaShopAdmin
 
             services.AddDbContext<PizzaShopDbContext>((provider, builder) => { builder.UseSqlServer(provider.GetService<DbContextConfiguration>().ConnectionString); });
             services.AddEntityFrameworkSqlServer();
+
+            services.AddScoped<IRepository<Account>, GenericRepository<Account>>();
+            services.AddScoped<IUsersService, UsersService>();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

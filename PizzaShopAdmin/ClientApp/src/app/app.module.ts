@@ -5,22 +5,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HttpService } from '../HttpServices/HttpService';
+import { routes } from './app-routing.module';
+import { HomePageComponent } from './componetns/home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomePageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-    ])
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
