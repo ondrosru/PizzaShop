@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaShop.EntityFramework.Migrations
 {
-    public partial class InitialDatabase : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,9 +17,9 @@ namespace PizzaShop.EntityFramework.Migrations
                     Password = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Surname = table.Column<string>(nullable: false),
-                    Birthday = table.Column<DateTime>(nullable: false),
-                    Phone = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: false),
+                    Birthday = table.Column<DateTime>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
                     Role = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
@@ -67,6 +67,7 @@ namespace PizzaShop.EntityFramework.Migrations
                     Surname = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
+                    Total = table.Column<decimal>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

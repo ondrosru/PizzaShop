@@ -32,15 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\HttpServices\UsersDataService.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PizzaShop.EntityFramework\PizzaShop.EntityFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\HttpServices\UsersDataService.ts" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
