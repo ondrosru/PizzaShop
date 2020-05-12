@@ -14,7 +14,7 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public int PizzaId { get; set; }
         [Required]
-        public decimal Cost { get; set; }
+        public float Cost { get; set; }
         [Required]
         public int Weight { get; set; }
 

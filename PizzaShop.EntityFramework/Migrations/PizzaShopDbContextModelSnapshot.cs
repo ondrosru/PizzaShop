@@ -29,9 +29,6 @@ namespace PizzaShop.EntityFramework.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Birthday")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -63,7 +60,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Account");
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Ingredient", b =>
@@ -79,7 +76,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredient");
+                    b.ToTable("Ingredients");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Order", b =>
@@ -111,14 +108,14 @@ namespace PizzaShop.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Total")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.OrderPrice", b =>
@@ -140,7 +137,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasIndex("PriceId");
 
-                    b.ToTable("OrderPrice");
+                    b.ToTable("OrderHasPrice");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Pizza", b =>
@@ -160,7 +157,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pizza");
+                    b.ToTable("Pizzas");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.PizzaIngredient", b =>
@@ -182,7 +179,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasIndex("PizzaId");
 
-                    b.ToTable("PizzaIngredient");
+                    b.ToTable("PizzaHasIngredient");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Price", b =>
@@ -192,8 +189,8 @@ namespace PizzaShop.EntityFramework.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("Cost")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<float>("Cost")
+                        .HasColumnType("real");
 
                     b.Property<int>("DoughThickness")
                         .HasColumnType("int");
@@ -211,7 +208,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
                     b.HasIndex("PizzaId");
 
-                    b.ToTable("Price");
+                    b.ToTable("Prices");
                 });
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Order", b =>

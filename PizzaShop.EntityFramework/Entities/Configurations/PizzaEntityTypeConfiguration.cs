@@ -7,7 +7,7 @@ namespace PizzaShop.EntityFramework.Entities.Configurations
     {
         public void Configure(EntityTypeBuilder<Pizza> builder)
         {
-            builder.ToTable("Pizza").HasKey(pizza => pizza.Id);
+            builder.ToTable("Pizzas").HasKey(pizza => pizza.Id);
             builder.HasMany(pizza => pizza.PizzaIngredients)
                 .WithOne(pizzaIngredient => pizzaIngredient.Pizza)
                 .HasForeignKey(pizzaIngredient => pizzaIngredient.PizzaId)

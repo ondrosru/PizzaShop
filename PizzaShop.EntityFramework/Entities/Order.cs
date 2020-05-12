@@ -17,7 +17,7 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public string Address { get; set; }
         [Required]
-        public decimal Total { get; set; }
+        public float Total { get; set; }
         [Required]
         public DateTime CreatedAt { get; set; }
 

@@ -8,7 +8,7 @@ namespace PizzaShop.EntityFramework.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Account",
+                name: "Accounts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,7 +17,6 @@ namespace PizzaShop.EntityFramework.Migrations
                     Password = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     Surname = table.Column<string>(nullable: false),
-                    Birthday = table.Column<DateTime>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
@@ -26,11 +25,11 @@ namespace PizzaShop.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Account", x => x.Id);
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ingredient",
+                name: "Ingredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -39,11 +38,11 @@ namespace PizzaShop.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ingredient", x => x.Id);
+                    table.PrimaryKey("PK_Ingredients", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pizza",
+                name: "Pizzas",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -53,11 +52,11 @@ namespace PizzaShop.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pizza", x => x.Id);
+                    table.PrimaryKey("PK_Pizzas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -67,22 +66,22 @@ namespace PizzaShop.EntityFramework.Migrations
                     Surname = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: false),
-                    Total = table.Column<decimal>(nullable: false),
+                    Total = table.Column<float>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_Account_AccountId",
+                        name: "FK_Orders_Accounts_AccountId",
                         column: x => x.AccountId,
-                        principalTable: "Account",
+                        principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PizzaIngredient",
+                name: "PizzaHasIngredient",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -92,23 +91,23 @@ namespace PizzaShop.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PizzaIngredient", x => x.Id);
+                    table.PrimaryKey("PK_PizzaHasIngredient", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PizzaIngredient_Ingredient_IngredientId",
+                        name: "FK_PizzaHasIngredient_Ingredients_IngredientId",
                         column: x => x.IngredientId,
-                        principalTable: "Ingredient",
+                        principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PizzaIngredient_Pizza_PizzaId",
+                        name: "FK_PizzaHasIngredient_Pizzas_PizzaId",
                         column: x => x.PizzaId,
-                        principalTable: "Pizza",
+                        principalTable: "Pizzas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Price",
+                name: "Prices",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -116,22 +115,22 @@ namespace PizzaShop.EntityFramework.Migrations
                     Size = table.Column<int>(nullable: false),
                     DoughThickness = table.Column<int>(nullable: false),
                     PizzaId = table.Column<int>(nullable: false),
-                    Cost = table.Column<decimal>(nullable: false),
+                    Cost = table.Column<float>(nullable: false),
                     Weight = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Price", x => x.Id);
+                    table.PrimaryKey("PK_Prices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Price_Pizza_PizzaId",
+                        name: "FK_Prices_Pizzas_PizzaId",
                         column: x => x.PizzaId,
-                        principalTable: "Pizza",
+                        principalTable: "Pizzas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderPrice",
+                name: "OrderHasPrice",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -141,74 +140,74 @@ namespace PizzaShop.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderPrice", x => x.Id);
+                    table.PrimaryKey("PK_OrderHasPrice", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderPrice_Order_OrderId",
+                        name: "FK_OrderHasPrice_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderPrice_Price_PriceId",
+                        name: "FK_OrderHasPrice_Prices_PriceId",
                         column: x => x.PriceId,
-                        principalTable: "Price",
+                        principalTable: "Prices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_AccountId",
-                table: "Order",
-                column: "AccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderPrice_OrderId",
-                table: "OrderPrice",
+                name: "IX_OrderHasPrice_OrderId",
+                table: "OrderHasPrice",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderPrice_PriceId",
-                table: "OrderPrice",
+                name: "IX_OrderHasPrice_PriceId",
+                table: "OrderHasPrice",
                 column: "PriceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaIngredient_IngredientId",
-                table: "PizzaIngredient",
+                name: "IX_Orders_AccountId",
+                table: "Orders",
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PizzaHasIngredient_IngredientId",
+                table: "PizzaHasIngredient",
                 column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaIngredient_PizzaId",
-                table: "PizzaIngredient",
+                name: "IX_PizzaHasIngredient_PizzaId",
+                table: "PizzaHasIngredient",
                 column: "PizzaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Price_PizzaId",
-                table: "Price",
+                name: "IX_Prices_PizzaId",
+                table: "Prices",
                 column: "PizzaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderPrice");
+                name: "OrderHasPrice");
 
             migrationBuilder.DropTable(
-                name: "PizzaIngredient");
+                name: "PizzaHasIngredient");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Price");
+                name: "Prices");
 
             migrationBuilder.DropTable(
-                name: "Ingredient");
+                name: "Ingredients");
 
             migrationBuilder.DropTable(
-                name: "Account");
+                name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Pizza");
+                name: "Pizzas");
         }
     }
 }
