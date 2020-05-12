@@ -30,13 +30,13 @@ namespace PizzaShopAdmin.Controllers
         {
             IActionResult response = Unauthorized();
             AccountDto account = _accountService.GetAccount(login);
+
             if (account != null && account.Role == Policies.Admin)
             {
                 var tokenString = GenerateJWT(account);
                 response = Ok(new
                 {
-                    token = tokenString,
-                    accountDetails = account
+                    token = tokenString
                 });
             }
             return response;
@@ -49,7 +49,8 @@ namespace PizzaShopAdmin.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, accountInfo.Id.ToString()),
-                new Claim("role", Policies.Admin)
+                new Claim("role", accountInfo.Role),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],

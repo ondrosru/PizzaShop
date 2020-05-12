@@ -8,8 +8,7 @@ namespace PizzaShop.EntityFramework.Repositories
     public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         public IQueryable<TEntity> All { get; }
-
-        private DbSet<TEntity> Table => _pizzaShopDbContext.Set<TEntity>();
+        public DbSet<TEntity> Table => _pizzaShopDbContext.Set<TEntity>();
         private readonly PizzaShopDbContext _pizzaShopDbContext;
 
         public GenericRepository(PizzaShopDbContext pizzaShopDbContext)

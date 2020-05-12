@@ -8,11 +8,12 @@ import { AppComponent } from './app.component';
 import { routes } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomePageComponent } from './componetns/home-page/home-page.component';
-import { ErrorInterceptorService } from 'src/HttpServices/ErrorInterceptorService';
-import { HttpInterceptorService } from 'src/HttpServices/HttpInterceptorService';
+import { ErrorInterceptorService } from 'src/app/HttpServices/ErrorInterceptorService';
+import { HttpInterceptorService } from 'src/app/HttpServices/HttpInterceptorService';
 import { MatFormFieldModule, MatCardModule, MatInputModule, MatButtonModule } from '@angular/material';
 import { SignInComponent } from './auth/sign-in/sign-in.component';
-import { AuthService } from 'src/HttpServices/AuthService';
+import { AuthService } from 'src/app/HttpServices/AuthService';
+import { AccountService } from './HttpServices/AccountService';
 
 
 @NgModule({
@@ -35,7 +36,7 @@ import { AuthService } from 'src/HttpServices/AuthService';
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
-    {provide: AuthService}],
+    {provide: AuthService}, {provide: AccountService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
