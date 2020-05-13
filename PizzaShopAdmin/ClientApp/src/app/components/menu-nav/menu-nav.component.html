@@ -1,0 +1,28 @@
+<div class="main-nav bg-dark navbar navbar-expand-md navbar-dark align-items-start flex-column">
+    <div class="justify-content-between">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+        aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+        <span class="navbar-toggler-icon"></span>    
+        </button>
+        <a class="navbar-brand" [routerLink]="[ '/admin/home' ]">PizzaAdmin</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 align-items-start" [ngClass]="{ show: isExpanded}">
+        <ul class="nav flex-column w-100 nav-pills">
+            <li class="nav-item">
+                <a class="nav-link text-light" [routerLinkActive]="['active']" [routerLink]="['/admin/home']"  [routerLinkActiveOptions]="{ exact: true }" (click)="toggle()">Домашняя страница</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" [routerLinkActive]="['active']" [routerLink]="['/admin/user-list']" (click)="toggle()">Список пользователей</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" [routerLinkActive]="['active']" [routerLink]="['/admin/pizza-list']" (click)="toggle()">Список пицц</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" [routerLinkActive]="['active']" [routerLink]="['/admin/order-list']" (click)="toggle()">Список заказов</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" [routerLink]="['/admin']" (click)="logout()">Выйти</a>
+            </li>
+        </ul>
+    </div>
+</div>

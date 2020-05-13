@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PizzaShopAdmin.Dto.Account;
 using PizzaShopAdmin.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using PizzaShopAdmin.Services;
+using System.Collections.Generic;
 
 namespace PizzaShopAdmin.Controllers
 {
@@ -10,12 +11,34 @@ namespace PizzaShopAdmin.Controllers
     [Route("api/[controller]")]
     public class AccountController : Controller
     {
+        private readonly IAccountService _accountService;
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpGet]
         [Route("GetAccount")]
         [Authorize(Policy = Policies.Admin)]
-        public IActionResult GetAccountData()
+        public AccountDto GetAccount(int id)
         {
-            return Ok("This is user");
+            return _accountService.GetAccount(id);
+        }
+
+        [HttpGet]
+        [Route("GetAccounts")]
+        [Authorize(Policy = Policies.Admin)]
+        public List<AccountDto> GetUsers()
+        {
+            return _accountService.GetAccounts();
+        }
+
+        [HttpPost]
+        [Route("SaveAccount")]
+        [Authorize(Policy = Policies.Admin)]
+        public AccountDto SaveUser([FromBody] AccountDto newAccount)
+        {
+            return _accountService.GetAccount(newAccount.Username);
         }
     }
 }

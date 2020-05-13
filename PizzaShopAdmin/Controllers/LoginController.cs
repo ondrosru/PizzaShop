@@ -29,14 +29,15 @@ namespace PizzaShopAdmin.Controllers
         public IActionResult SingIn([FromBody]LoginDto login)
         {
             IActionResult response = Unauthorized();
-            AccountDto account = _accountService.GetAccount(login);
+            AccountDto account = _accountService.GetAccount(login.Username);
 
-            if (account != null && account.Role == Policies.Admin)
+            if (account != null && account.Role == Policies.Admin && account.Password.Equals(login.Password))
             {
                 var tokenString = GenerateJWT(account);
                 response = Ok(new
                 {
-                    token = tokenString
+                    token = tokenString,
+                    details = account
                 });
             }
             return response;

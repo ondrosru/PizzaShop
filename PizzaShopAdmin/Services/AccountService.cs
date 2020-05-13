@@ -3,6 +3,9 @@ using PizzaShop.EntityFramework.Entities.Enum;
 using PizzaShop.EntityFramework.Repositories;
 using PizzaShopAdmin.Dto.Account;
 using PizzaShopAdmin.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PizzaShopAdmin.Services
 {
@@ -14,9 +17,10 @@ namespace PizzaShopAdmin.Services
         {
             _accountRepository = accountRepository;
         }
-        public AccountDto GetAccount(LoginDto loginData)
+
+        public AccountDto GetAccount(string username)
         {
-            Account account = _accountRepository.GetAccount(loginData.Username, loginData.Password);
+            Account account = _accountRepository.GetAccount(username);
             if (account != null)
             {
                 return Convert(account);
@@ -24,6 +28,71 @@ namespace PizzaShopAdmin.Services
             return null;
         }
 
+        public AccountDto GetAccount(int id)
+        {
+            if (id == 0)
+            {
+                return CreateAccount();
+            }
+
+            Account account = _accountRepository.GetItem(id);
+            if (account != null)
+            {
+                return Convert(account);
+            }
+            return null;
+        }
+
+        public List<AccountDto> GetAccounts()
+        {
+            List<Account> accounts = _accountRepository.All.ToList();
+            return accounts.ConvertAll(Convert);
+        }
+
+        public AccountDto SaveAccount(AccountDto newAccount)
+        {
+            Account account = _accountRepository.GetItem(newAccount.Id) ?? new Account { };
+            account.Name = newAccount.Name;
+            account.Surname = newAccount.Surname;
+            account.Username = newAccount.Username;
+            account.Password = newAccount.Password;
+            account.Role = ConvertRole(newAccount.Role);
+            account.Address = newAccount.Address;
+            account.Email = newAccount.Email;
+            account.Phone = newAccount.Phone;
+            account.CreatedAt = DateTime.Now;
+            account = _accountRepository.Save(account);
+            return Convert(account);
+        }
+
+        private AccountDto CreateAccount()
+        {
+            return new AccountDto
+            {
+                Id = 0,
+                Name = string.Empty,
+                Surname = string.Empty,
+                Username = string.Empty,
+                Password = string.Empty,
+                Email = string.Empty,
+                Address = string.Empty,
+                Phone = string.Empty
+            };
+        }
+
+        private Role ConvertRole(string role)
+        {
+            Role convertedRole;
+            if (role.Equals(Policies.Admin))
+            {
+                convertedRole = Role.Administrator;
+            }
+            else
+            {
+                convertedRole = Role.Client;
+            }
+            return convertedRole;
+        }
         private AccountDto Convert(Account account)
         {
             AccountDto convertedAccount = new AccountDto

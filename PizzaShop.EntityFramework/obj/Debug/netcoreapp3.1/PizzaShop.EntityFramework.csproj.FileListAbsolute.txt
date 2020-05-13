@@ -22,3 +22,15 @@ D:\Documents\Programming\Project\PizzaShop\PizzaShop.EntityFramework\obj\Debug\n
 D:\Documents\Programming\Project\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.pdb
 D:\Documents\Programming\Project\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.genruntimeconfig.cache
 D:\Documents\Programming\Project\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.csproj.CoreCompileInputs.cache
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\bin\Debug\netcoreapp3.1\PizzaShop.EntityFramework.deps.json
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\bin\Debug\netcoreapp3.1\PizzaShop.EntityFramework.runtimeconfig.json
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\bin\Debug\netcoreapp3.1\PizzaShop.EntityFramework.runtimeconfig.dev.json
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\bin\Debug\netcoreapp3.1\PizzaShop.EntityFramework.dll
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\bin\Debug\netcoreapp3.1\PizzaShop.EntityFramework.pdb
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.csprojAssemblyReference.cache
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.csproj.CoreCompileInputs.cache
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.AssemblyInfoInputs.cache
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.AssemblyInfo.cs
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.dll
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.pdb
+D:\Documents\PizzaShop\PizzaShop.EntityFramework\obj\Debug\netcoreapp3.1\PizzaShop.EntityFramework.genruntimeconfig.cache

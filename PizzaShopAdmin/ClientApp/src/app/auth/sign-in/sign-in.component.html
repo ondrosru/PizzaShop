@@ -3,7 +3,7 @@
         <mat-card class="col-9 col-md-6 col-lg-5">
             <mat-card-title class="text-center">Авторизация</mat-card-title>
             <mat-card-content>
-                <form class="d-flex flex-column" [formGroup]="form" (submit)="signIn()">
+                <form #f="ngForm" class="d-flex flex-column" [formGroup]="form" (ngSubmit)="signIn()">
                     <mat-error *ngIf="form.getError('invalidLogin')">Неверное имя пользователя или пароль</mat-error>
                     <mat-form-field appearance="fill">
                         <mat-label>Имя пользователя</mat-label>

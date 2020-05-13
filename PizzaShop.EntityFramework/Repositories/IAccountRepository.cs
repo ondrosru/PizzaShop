@@ -4,6 +4,6 @@ namespace PizzaShop.EntityFramework.Repositories
 {
     public interface IAccountRepository : IRepository<Account>
     {
-        Account GetAccount(string username, string password);
+        Account GetAccount(string username);
     }
 }

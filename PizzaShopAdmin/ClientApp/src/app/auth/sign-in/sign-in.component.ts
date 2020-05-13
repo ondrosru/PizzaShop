@@ -57,7 +57,7 @@ export class SignInComponent implements OnInit {
       return;
     }
     this.loading = true;
-    const returnUrl = '/';
+    const returnUrl = '/admin/home';
     this._authService.signIn(this.form.value)
     .pipe(first())
     .subscribe(

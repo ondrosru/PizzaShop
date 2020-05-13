@@ -13,12 +13,11 @@ namespace PizzaShop.EntityFramework.Repositories
             _pizzaShopDbContext = pizzaShopDbContext;
         }
 
-        public Account GetAccount(string username, string password)
+        public Account GetAccount(string username)
         {
-            string command = @"SELECT * FROM dbo.Accounts WHERE @Username = Username AND @Password = Password";
+            string command = @"SELECT * FROM dbo.Accounts WHERE @Username = Username";
             SqlParameter parameterUsername = new SqlParameter("@Username", username);
-            SqlParameter parameterPassword = new SqlParameter("@Password", password);
-            return Table.FromSqlRaw(command, parameterUsername, parameterPassword).FirstOrDefault();
+            return Table.FromSqlRaw(command, parameterUsername).FirstOrDefault();
         }
     }
 }
