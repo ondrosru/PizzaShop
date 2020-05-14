@@ -5,7 +5,7 @@ namespace PizzaShopAdmin.Models
     public static class Policies
     {
         public const string Admin = "Admin";
-        public const string User = "User";
+        public const string Client = "Client";
 
         public static AuthorizationPolicy AdminPolicy()
         {
@@ -14,7 +14,7 @@ namespace PizzaShopAdmin.Models
 
         public static AuthorizationPolicy UserPolicy()
         {
-            return new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole(User).Build();
+            return new AuthorizationPolicyBuilder().RequireAuthenticatedUser().RequireRole(Client).Build();
         }
     }
 }

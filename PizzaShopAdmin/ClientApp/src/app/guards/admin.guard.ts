@@ -13,7 +13,7 @@ export class AdminGuard implements CanActivate {
   public accountData = new AccountDto();
 
   constructor(private router: Router, private authService: AuthService) {
-    this.accountDataSubscribtion = authService.userData.asObservable().subscribe(data => {
+    this.accountDataSubscribtion = authService.user.subscribe(data => {
       this.accountData = data;
     });
   }

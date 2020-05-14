@@ -20,6 +20,7 @@ import { UserListPageComponent } from './components/user-list-page/user-list-pag
 import { PizzaListPageComponent } from './components/pizza-list-page/pizza-list-page.component';
 import { EditPizzaPageComponent } from './components/edit-pizza-page/edit-pizza-page.component';
 import { OrderListPageComponent } from './components/order-list-page/order-list-page.component';
+import { MatSelectModule } from '@angular/material/select';
 import { HttpService } from './HttpServices/HttpService';
 
 
@@ -46,7 +47,8 @@ import { HttpService } from './HttpServices/HttpService';
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},

@@ -18,4 +18,12 @@ export class UserListPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  public deleteUser(id: number): void {
+    this.accountService.deleteUser(id).subscribe( () => {
+      this.accountService.getAccounts().subscribe( values => {
+        this.accounts = values;
+      });
+    });
+  }
 }

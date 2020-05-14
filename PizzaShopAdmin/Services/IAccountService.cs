@@ -5,9 +5,11 @@ namespace PizzaShopAdmin.Services
 {
     public interface IAccountService
     {
-        AccountDto GetAccount(string username);
+        AccountDto GetAnUsernameAccount(string username);
+        AccountDto GetAnEmailAccount(string email);
         List<AccountDto> GetAccounts();
         AccountDto GetAccount(int id);
         AccountDto SaveAccount(AccountDto newAccount);
+        void DeleteAccount(int id);
     }
 }

@@ -1,4 +1,76 @@
 <div *ngIf="newUser">
-    <h1>Доабление пользователя</h1>
-    {{newUser.id}}
+    <h1 *ngIf="newUser.id == 0">Добавление пользователя</h1>
+    <h1 *ngIf="newUser.id != 0">Редактирование пользователя</h1>
+    <mat-card-content class="container">
+        <form (ngSubmit)="saveUser()">
+            <div class="row">
+                <div class="d-flex col-md-6 flex-column">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Имя</mat-label>
+                        <input [(ngModel)]="newUser.name" name="name" #firstname="ngModel" matInput type="text" placeholder="Имя" required pattern="^[a-zA-Zа-яА-Я]+$">
+                        <mat-error *ngIf="firstname.getError('required')">Введите имя</mat-error>
+                        <mat-error *ngIf="firstname.getError('pattern')">Имя должно состоять только из букв</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Фамилия</mat-label>
+                        <input [(ngModel)]="newUser.surname" name="surname" #surname="ngModel" matInput type="text" placeholder="Фамилия" required pattern="^[a-zA-Zа-яА-Я]+$">
+                        <mat-error *ngIf="surname.getError('required')">Введите фамилию</mat-error>
+                        <mat-error *ngIf="surname.getError('pattern')">Фамилия должно состоять только из букв</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Номер телефона</mat-label>
+                        <input [(ngModel)]="newUser.phone" name="phone" #phone="ngModel" matInput type="text" placeholder="Номер телефона" required pattern="^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$">
+                        <mat-error *ngIf="phone.getError('required')">Введите номер телефона</mat-error>
+                        <mat-error *ngIf="phone.getError('pattern')">Неверный номер</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Адрес</mat-label>
+                        <input [(ngModel)]="newUser.address" name="address" #address="ngModel" matInput type="text" placeholder="Адрес">
+                    </mat-form-field>
+                </div>
+                <div class="d-flex col-md-6 flex-column">
+                    <mat-error *ngIf="hasError('Username')">{{getErrorMessage('Username')}}</mat-error>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Имя пользователя</mat-label>
+                        <input [(ngModel)]="newUser.username" name="username" #username="ngModel" matInput type="text" placeholder="Имя пользователя" required minLength=5 maxLength=25 pattern="^(?![0-9_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$">
+                        <mat-error *ngIf="username.getError('required')">Имя пользователя не заполнено</mat-error>
+                        <mat-error *ngIf="username.getError('minlength')">Имя пользователя не менее 5 символов</mat-error>
+                        <mat-error *ngIf="username.getError('maxlength')">Имя пользователя не более 25 символов</mat-error>
+                        <mat-error *ngIf="username.getError('pattern')">Неверное имя пользоветля</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Пароль</mat-label>
+                        <input [(ngModel)]="newUser.password" name="password" #password="ngModel" matInput type="password" placeholder="Пароль" required minlength=8 pattern="^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$">
+                        <mat-error *ngIf="password.getError('required')">Пароль не заполнен</mat-error>
+                        <mat-error *ngIf="password.getError('minlength')">Пароль не менее 8 символов</mat-error>
+                        <mat-error *ngIf="password.getError('pattern')">Ваш пароль должен содержать как минимум одна букву и одну цифру</mat-error>
+                    </mat-form-field>
+                    <mat-error *ngIf="hasError('Email')">{{getErrorMessage('Email')}}</mat-error>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input [(ngModel)]="newUser.email" name="email" #emailAddress="ngModel" matInput type="text" placeholder="Email" email>
+                        <mat-error *ngIf="emailAddress.getError('email')">Неверный формат почты</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Роль</mat-label>
+                        <mat-select [(ngModel)]="newUser.role" name="role" matInput>
+                          <mat-option value="{{roles.Client}}">Клиент</mat-option>
+                          <mat-option value="{{roles.Admin}}">Администратор</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>                
+            </div>
+            <div class="d-flex flex-row">
+                <button [disabled]="firstname.invalid || surname.invalid || phone.invalid || username.invalid || emailAddress.invalid || password.invalid"  *ngIf="newUser.id == 0" class="btn" type="submit" mat-raised-button color="primary">
+                    Добавить
+                </button>
+                <button [disabled]="firstname.invalid || surname.invalid || phone.invalid || username.invalid || emailAddress.invalid || password.invalid" *ngIf="newUser.id != 0" class="btn" type="submit" mat-raised-button color="primary">
+                    Изменить
+                </button>
+                <button class="btn bg-danger ml-1" type="button" mat-raised-button color="primary" [routerLink]="[ '/admin/user-list' ]">
+                    Отменить
+                </button>
+            </div>
+        </form>
+    </mat-card-content>
 </div>

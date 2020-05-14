@@ -58,7 +58,7 @@ namespace PizzaShopAdmin
             services.AddAuthorization(config =>
             {
                 config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-                config.AddPolicy(Policies.User, Policies.UserPolicy());
+                config.AddPolicy(Policies.Client, Policies.UserPolicy());
             });
 
             services.AddScoped<IAccountRepository, AccountRepository>();

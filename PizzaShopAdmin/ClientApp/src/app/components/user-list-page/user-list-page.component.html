@@ -23,7 +23,7 @@
                     <td class="text-right">
                         <div class="btn-group" role="group" >
                             <button type="button" class="btn btn-primary" [routerLink]="[ '/admin/user-list/edit-user', account.id]">Изменить</button>
-                            <button type="button" class="btn btn-danger">Удалить</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteUser(account.id)">Удалить</button>
                         </div>
                     </td>
                 </tr>

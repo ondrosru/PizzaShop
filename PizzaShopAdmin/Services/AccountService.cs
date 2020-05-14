@@ -18,9 +18,19 @@ namespace PizzaShopAdmin.Services
             _accountRepository = accountRepository;
         }
 
-        public AccountDto GetAccount(string username)
+        public AccountDto GetAnUsernameAccount(string username)
         {
-            Account account = _accountRepository.GetAccount(username);
+            Account account = _accountRepository.GetAnUsernameAccount(username);
+            if (account != null)
+            {
+                return Convert(account);
+            }
+            return null;
+        }
+
+        public AccountDto GetAnEmailAccount(string email)
+        {
+            Account account = _accountRepository.GetAnEmailAccount(email);
             if (account != null)
             {
                 return Convert(account);
@@ -113,9 +123,14 @@ namespace PizzaShopAdmin.Services
             }
             else
             {
-                convertedAccount.Role = Policies.User;
+                convertedAccount.Role = Policies.Client;
             }
             return convertedAccount;
+        }
+
+        public void DeleteAccount(int id)
+        {
+            _accountRepository.Delete(id);
         }
     }
 }
