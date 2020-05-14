@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PizzaDto } from 'src/dto/Pizza/PizzaDto';
 
 @Component({
   selector: 'app-pizza-list-page',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pizza-list-page.component.css']
 })
 export class PizzaListPageComponent implements OnInit {
+  public pizzas: PizzaDto[];
 
   constructor() { }
 

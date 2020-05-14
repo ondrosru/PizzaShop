@@ -7,6 +7,7 @@ import { UserListPageComponent } from './components/user-list-page/user-list-pag
 import { PizzaListPageComponent } from './components/pizza-list-page/pizza-list-page.component';
 import { OrderListPageComponent } from './components/order-list-page/order-list-page.component';
 import { EditUserPageComponent } from './components/edit-user-page/edit-user-page.component';
+import { EditPizzaPageComponent } from './components/edit-pizza-page/edit-pizza-page.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'admin/home', pathMatch: 'full'},
@@ -21,5 +22,7 @@ export const routes: Routes = [
         {path: 'order-list', component: OrderListPageComponent},
         {path: 'user-list/edit-user', component: EditUserPageComponent},
         {path: 'user-list/edit-user/:Id', component: EditUserPageComponent},
+        {path: 'pizza-list/edit-pizza', component: EditPizzaPageComponent},
+        {path: 'pizza-list/edit-pizza/:Id', component: EditPizzaPageComponent},
       ]}
 ];
