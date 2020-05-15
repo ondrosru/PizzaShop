@@ -1,0 +1,17 @@
+<div class="curtain" (click)="close()"></div>
+<div class="ui-modal">
+    <mat-card>
+        <mat-card-title class="text-center">Добавить ингредиент</mat-card-title>
+        <form [formGroup]="form" class="d-flex justify-content-center align-items-center flex-column w-100">
+            <mat-form-field appearance="fill">
+                <mat-label>Название ингредиента</mat-label>
+                <input matInput type="text" placeholder="Название ингредиента" formControlName="name" >
+                <mat-error *ngIf="form.controls['name'].hasError('required')">Заполните название</mat-error>
+            </mat-form-field>
+            <div class="row d-flex flex-row justify-content-center">
+                <button type="button" (click)="saveIngredient()" class="btn btn-primary">Добавить</button>
+                <button type="button" (click)="close()" class="ml-3 btn btn-danger">Закрыть</button>
+            </div>
+        </form>
+    </mat-card>
+</div>

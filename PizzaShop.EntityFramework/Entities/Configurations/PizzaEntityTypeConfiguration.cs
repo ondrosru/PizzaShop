@@ -13,7 +13,7 @@ namespace PizzaShop.EntityFramework.Entities.Configurations
                 .HasForeignKey(pizzaIngredient => pizzaIngredient.PizzaId)
                 .IsRequired();
             builder.HasMany(pizza => pizza.Prices)
-                .WithOne(price => price.Pizzas)
+                .WithOne(price => price.Pizza)
                 .HasForeignKey(price => price.PizzaId)
                 .IsRequired();
         }

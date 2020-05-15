@@ -18,7 +18,7 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public int Weight { get; set; }
 
-        public virtual Pizza Pizzas { get; set; }
+        public virtual Pizza Pizza { get; set; }
         public virtual ICollection<OrderPrice> OrderPrices { get; set; }
     }
 }

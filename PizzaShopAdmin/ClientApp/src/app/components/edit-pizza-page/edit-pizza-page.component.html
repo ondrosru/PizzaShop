@@ -1,9 +1,22 @@
-<img [src]="url" height="200"> <br/>
+<div class="modal-block">
+    <ng-template popup-host></ng-template>
+</div>
+<div class="w-100 d-flex flex-row">
+    <div class="w-50 rounded-left">
+        <div class="w-100 headerListIngredient border-right">Список ингредиентов</div>
+        <div *ngFor="let ingredient of ingredietns" class="w-100 border btn" (click)="selectIngredient(ingredient.id)" >{{ingredient.name}}</div>
+        <button class="btn w-100 btn-success" type="button" (click)="addIngredient()">Добавить ингредиент</button>
+    </div>
+    <div class="w-50 rounded-right">
+        <div class="w-100 headerListIngredient">Выбранные ингредиенты</div>
+        <div *ngFor="let ingredient of selectedIngredients" class="w-100 border btn" (click)="deselectIngredient(ingredient.id)">{{ingredient.name}}</div>
+    </div>
+</div>
 
-<input
-    style="display: none"
-    #fileInput
-    type="file" (change)="onFileSelected($event)" >
+
+<img [src]="url" height="200"> <br />
+
+<input style="display: none" #fileInput type="file" (change)="onFileSelected($event)">
 <button type="button" (click)="fileInput.click()">Pick File</button>
 <button type="button" (click)="onUpload()">Upload</button>
 
@@ -13,10 +26,10 @@
             <button class="btn" type="submit" mat-raised-button color="primary">
                 Изменить
             </button>
-            <button class="btn bg-danger ml-1" type="button" mat-raised-button color="primary" [routerLink]="[ '/admin/pizza-list' ]">
+            <button class="btn bg-danger ml-1" type="button" mat-raised-button color="primary"
+                [routerLink]="[ '/admin/pizza-list' ]">
                 Отменить
             </button>
         </div>
     </form>
 </mat-card-content>
-

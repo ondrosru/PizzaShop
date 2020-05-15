@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaShop.EntityFramework;
 
 namespace PizzaShop.EntityFramework.Migrations
 {
     [DbContext(typeof(PizzaShopDbContext))]
-    partial class PizzaShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200515024152_AddCountPizzaInOrderAndImgPathInPizza")]
+    partial class AddCountPizzaInOrderAndImgPathInPizza
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,7 +258,7 @@ namespace PizzaShop.EntityFramework.Migrations
 
             modelBuilder.Entity("PizzaShop.EntityFramework.Entities.Price", b =>
                 {
-                    b.HasOne("PizzaShop.EntityFramework.Entities.Pizza", "Pizza")
+                    b.HasOne("PizzaShop.EntityFramework.Entities.Pizza", "Pizzas")
                         .WithMany("Prices")
                         .HasForeignKey("PizzaId")
                         .OnDelete(DeleteBehavior.Cascade)

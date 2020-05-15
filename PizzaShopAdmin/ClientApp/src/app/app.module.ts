@@ -22,6 +22,10 @@ import { EditPizzaPageComponent } from './components/edit-pizza-page/edit-pizza-
 import { OrderListPageComponent } from './components/order-list-page/order-list-page.component';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpService } from './HttpServices/HttpService';
+import { AddIngredientComponent } from './components/add-ingredient/add-ingredient.component';
+import { PopupSerivce } from './Services/PopupService';
+import { PopupDirective } from './components/popupDirective';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -35,7 +39,9 @@ import { HttpService } from './HttpServices/HttpService';
     UserListPageComponent,
     PizzaListPageComponent,
     EditPizzaPageComponent,
-    OrderListPageComponent
+    OrderListPageComponent,
+    AddIngredientComponent,
+    PopupDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,11 +54,12 @@ import { HttpService } from './HttpServices/HttpService';
     MatCardModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    ScrollingModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
-    {provide: AuthService}, {provide: AccountService}, {provide: HttpService}],
+    {provide: AuthService}, {provide: AccountService}, {provide: HttpService}, {provide: PopupSerivce}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

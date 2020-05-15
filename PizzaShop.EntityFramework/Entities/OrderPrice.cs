@@ -9,6 +9,7 @@ namespace PizzaShop.EntityFramework.Entities
         public int OrderId { get; set; }
         [Required]
         public int PriceId { get; set; }
+        public int Count { get; set; }
 
         public virtual Price Price { get; set; }
         public virtual Order Order { get; set; }

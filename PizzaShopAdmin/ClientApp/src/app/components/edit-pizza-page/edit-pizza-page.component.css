@@ -1,0 +1,10 @@
+.ingredientsContainer {
+    height: 500px;
+}
+
+.headerListIngredient {
+    height: 50px;
+    background-color: #3498DB;
+    text-align: center;
+    color: white;
+}

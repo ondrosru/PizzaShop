@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using PizzaShop.EntityFramework;
 using PizzaShop.EntityFramework.Configuration;
+using PizzaShop.EntityFramework.Entities;
 using PizzaShop.EntityFramework.Repositories;
 using PizzaShopAdmin.Config;
 using PizzaShopAdmin.Models;
@@ -63,6 +64,9 @@ namespace PizzaShopAdmin
 
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddScoped<IRepository<Ingredient>, GenericRepository<Ingredient>>();
+            services.AddScoped<IIngredientService, IngredientSerivce>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

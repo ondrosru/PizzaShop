@@ -11,6 +11,8 @@ namespace PizzaShop.EntityFramework.Entities
         [Required]
         public string Description { get; set; }
 
+        public string ImgPath { get; set; }
+
         public virtual ICollection<PizzaIngredient> PizzaIngredients { get; set; }
         public virtual ICollection<Price> Prices { get; set; }
     }
