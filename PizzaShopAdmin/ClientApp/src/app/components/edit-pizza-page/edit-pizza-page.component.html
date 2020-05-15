@@ -9,7 +9,7 @@
     </div>
     <div class="w-50 rounded-right">
         <div class="w-100 headerListIngredient">Выбранные ингредиенты</div>
-        <div *ngFor="let ingredient of selectedIngredients" class="w-100 border btn" (click)="deselectIngredient(ingredient.id)">{{ingredient.name}}</div>
+        <div *ngFor="let ingredient of selectedIngredients.value" class="w-100 border btn" (click)="deselectIngredient(ingredient.id)">{{ingredient.name}}</div>
     </div>
 </div>
 

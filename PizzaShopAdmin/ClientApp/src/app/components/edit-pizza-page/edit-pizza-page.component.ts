@@ -5,8 +5,7 @@ import { PopupSerivce } from 'src/app/Services/PopupService';
 import { AddIngredientComponent } from '../add-ingredient/add-ingredient.component';
 import { IngredientService } from 'src/app/HttpServices/IngredientService';
 import { IngredientDto } from 'src/dto/Pizza/IngredientDto';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { PriceDto } from 'src/dto/Pizza/PriceDto';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 
 export interface PopupComponent {
   data: any;
@@ -21,7 +20,6 @@ export interface PopupComponent {
 export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription: Subscription;
   private ingredietns: IngredientDto[];
-  private selectedIngredients: IngredientDto[];
   private pizzaForm: FormGroup;
   @ViewChild(PopupDirective) popupHost: PopupDirective;
   selectedFile: File = null;
@@ -32,7 +30,6 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private viewContainerRef: ViewContainerRef,
     private ingredientService: IngredientService,
     private fromBuilder: FormBuilder) {
-      this.selectedIngredients = [];
       this.ingredientService.getIngredients().subscribe(values => {
         this.ingredietns = values;
       });
@@ -40,10 +37,14 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
         id: 0,
         name: new FormControl('', Validators.required),
         description: new FormControl('', Validators.required),
-        prices: [],
+        prices: this.fromBuilder.array([], Validators.minLength(1)),
         imgPath: '',
-        ingredients: []
+        ingredients: this.fromBuilder.array([], Validators.minLength(1))
       });
+  }
+
+  get selectedIngredients(): FormArray {
+    return <FormArray>this.pizzaForm.controls.ingredients;
   }
 
   ngOnInit(): void {
@@ -52,6 +53,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
   ngAfterViewInit() {
     this.subscription = this.popupService.popupDialog$.subscribe((data) => {
       if (!!data && data.popupEvent === 'open') {
@@ -81,16 +83,14 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     const index = this.ingredietns.findIndex(value => {
        return value.id === id;
       });
-    this.selectedIngredients.push(this.ingredietns[index]);
+    this.selectedIngredients.push(new FormControl(this.ingredietns[index]));
     this.ingredietns.splice(index, 1);
   }
 
   deselectIngredient(id: number) {
-    const index = this.selectedIngredients.findIndex(value => {
-       return value.id === id;
-      });
-    this.ingredietns.push(this.selectedIngredients[index]);
-    this.selectedIngredients.splice(index, 1);
+    const index = this.selectedIngredients.value.findIndex(value => value.id === id);
+    this.ingredietns.push(this.selectedIngredients.value[index]);
+    this.selectedIngredients.removeAt(index);
   }
 
   addIngredient() {
