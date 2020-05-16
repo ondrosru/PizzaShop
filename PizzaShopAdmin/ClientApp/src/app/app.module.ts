@@ -26,6 +26,8 @@ import { AddIngredientComponent } from './components/add-ingredient/add-ingredie
 import { PopupSerivce } from './Services/PopupService';
 import { PopupDirective } from './components/popupDirective';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ImageService } from './HttpServices/ImageService';
 
 
 @NgModule({
@@ -55,11 +57,13 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    ScrollingModule
+    ScrollingModule,
+    MatCheckboxModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},
-    {provide: AuthService}, {provide: AccountService}, {provide: HttpService}, {provide: PopupSerivce}],
+    {provide: AuthService}, {provide: AccountService}, {provide: HttpService}, {provide: PopupSerivce},
+    {provide: ImageService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

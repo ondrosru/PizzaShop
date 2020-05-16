@@ -65,8 +65,11 @@ namespace PizzaShopAdmin
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
 
+            services.AddScoped<IRepository<Pizza>, GenericRepository<Pizza>>();
+
             services.AddScoped<IRepository<Ingredient>, GenericRepository<Ingredient>>();
             services.AddScoped<IIngredientService, IngredientSerivce>();
+            
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

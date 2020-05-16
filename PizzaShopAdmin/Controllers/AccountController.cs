@@ -4,7 +4,6 @@ using PizzaShopAdmin.Dto.Account;
 using PizzaShopAdmin.Dto.Error;
 using PizzaShopAdmin.Models;
 using PizzaShopAdmin.Services;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace PizzaShopAdmin.Controllers

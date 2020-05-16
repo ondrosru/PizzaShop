@@ -7,4 +7,5 @@ export class PriceDto {
     public doughThickness: DoughThickness;
     public cost: number;
     public weight: number;
+    public checked?: boolean;
 }
