@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PizzaShopAdmin.Dto.Pizza;
 using PizzaShopAdmin.Models;
 using PizzaShopAdmin.Services;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,8 +13,10 @@ namespace PizzaShopAdmin.Controllers
     [Route("api/[controller]")]
     public class PizzaController : Controller
     {
-        public PizzaController()
+        private readonly IPizzaService _pizzaService;
+        public PizzaController(IPizzaService pizzaService)
         {
+            _pizzaService = pizzaService;
         }
 
         [HttpPost]
@@ -27,9 +30,17 @@ namespace PizzaShopAdmin.Controllers
         [HttpGet]
         [Route("GetPizza")]
         [Authorize(Policy = Policies.Admin)]
-        public PizzaDto GetAccount(int id)
+        public PizzaDto GetPizza(int id)
         {
-            return new PizzaDto();
+            return _pizzaService.GetPizza(id);
+        }
+
+        [HttpGet]
+        [Route("GetPizzas")]
+        [Authorize(Policy = Policies.Admin)]
+        public List<PizzaDto> GetPizzas()
+        {
+            return _pizzaService.GetPizzas();
         }
     }
 }

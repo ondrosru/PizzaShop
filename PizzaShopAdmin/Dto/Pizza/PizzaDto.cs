@@ -1,5 +1,4 @@
-﻿using PizzaShop.EntityFramework.Entities;
-using PizzaShopAdmin.Dto.Ingredient;
+﻿using PizzaShopAdmin.Dto.Ingredient;
 using System.Collections.Generic;
 
 namespace PizzaShopAdmin.Dto.Pizza

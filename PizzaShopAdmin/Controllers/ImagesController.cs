@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PizzaShopAdmin.Models;
-using PizzaShopAdmin.Services;
 using System;
 using System.IO;
 using System.Net.Http.Headers;
@@ -23,7 +23,7 @@ namespace PizzaShopAdmin.Controllers
         {
             try
             {
-                var file = Request.Form.Files[0];
+                IFormFile file = Request.Form.Files[0];
                 string newPath = "D:\\Pictures\\PizzaShop";
                 if (!Directory.Exists(newPath))
                 {
@@ -46,6 +46,16 @@ namespace PizzaShopAdmin.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("GetImage")]
+        [Authorize(Policy = Policies.Admin)]
+        public IActionResult LoadImage(string name)
+        {
+            var filePath = "D:\\Pictures\\PizzaShop\\" + name;
+            byte[] b = System.IO.File.ReadAllBytes(filePath);
+            return File(b, "image/jpeg");
         }
     }
 }

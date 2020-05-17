@@ -3,30 +3,29 @@
         <h1>Список пицц</h1>
     </div>
     <div class="d-flex justify-content-end m-2">
-        <button type="button" class="d-flex btn btn-primary" [routerLink]="[ '/admin/pizza-list/edit-pizza']">Добавить</button>
+        <button type="button" class="d-flex btn btn-primary" [routerLink]="[ '/admin/pizza-list/edit-pizza' ]">Добавить</button>
     </div>
     <div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Изображение</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Название</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let pizza of pizzas">
-                    <td></td>
+                    <th scope="row">{{pizza.id}}</th>
                     <td>{{pizza.name}}</td>
                     <td class="text-right">
                         <div class="btn-group" role="group" >
-                            <button type="button" class="btn btn-primary">Изменить</button>
+                            <button type="button" class="btn btn-primary" [routerLink]="[ '/admin/pizza-list/edit-pizza', pizza.id]">Изменить</button>
                             <button type="button" class="btn btn-danger">Удалить</button>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <div *ngIf="!pizzas" class="text-center w-100">Список пицц пуст</div>
     </div>
   </div>

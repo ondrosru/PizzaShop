@@ -11,6 +11,7 @@ import { PriceDto } from 'src/dto/Pizza/PriceDto';
 import { DoughThickness } from 'src/dto/Pizza/Enums/DoughThickness';
 import { ImageService } from 'src/app/HttpServices/ImageService';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PizzaService } from 'src/app/HttpServices/PizzaSerivce';
 
 export interface PopupComponent {
   data: any;
@@ -20,7 +21,7 @@ export interface PopupComponent {
   selector: 'app-edit-pizza-page',
   templateUrl: './edit-pizza-page.component.html',
   styleUrls: ['./edit-pizza-page.component.css'],
-  providers: [IngredientService, ImageService]
+  providers: [IngredientService, ImageService, PizzaService]
 })
 export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private _router: Router;
@@ -32,6 +33,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
   private pizza: PizzaDto = new PizzaDto();
   @ViewChild(PopupDirective) popupHost: PopupDirective;
   private imageFile: File;
+  private imageСhanged: boolean;
   image: ArrayBuffer;
   private smallPizza: boolean;
   private mediumPizza: boolean;
@@ -42,25 +44,69 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private componentFactoryResolver: ComponentFactoryResolver,
     private viewContainerRef: ViewContainerRef,
     private ingredientService: IngredientService,
-    private imageSerivce: ImageService) {
-    this.imageFile = null;
-    this.ingredientService.getIngredients().subscribe(values => {
-      this.ingredietns = values;
-    });
-    this.prices = [];
-    this.pizza.name = '';
-    this.pizza.description = '';
-    Object.keys(PizzaSize).filter((type) => isNaN(<any>type) && type !== 'values').forEach(size => {
-      Object.keys(DoughThickness).filter((type) => isNaN(<any>type) && type !== 'values').forEach(thicknes => {
-        const price = new PriceDto();
-        price.doughThickness = DoughThickness[thicknes];
-        price.size = PizzaSize[size];
-        price.cost = 0;
-        price.weight = 0;
-        price.checked = false;
-        this.prices.push(price);
+    private imageSerivce: ImageService,
+    private pizzaService: PizzaService,
+    private route: ActivatedRoute,
+    private router: Router) {
+      this.imageСhanged = false;
+      this.smallPizza = false;
+      this.mediumPizza = false;
+      this.bigPizza = false;
+      this.imageFile = null;
+      this.ingredietns = [];
+      this.prices = [];
+      Object.keys(PizzaSize).filter((type) => isNaN(<any>type) && type !== 'values').forEach(size => {
+        Object.keys(DoughThickness).filter((type) => isNaN(<any>type) && type !== 'values').forEach(thicknes => {
+          const price = new PriceDto();
+          price.doughThickness = DoughThickness[thicknes];
+          price.size = PizzaSize[size];
+          price.cost = 0;
+          price.weight = 0;
+          price.checked = false;
+          this.prices.push(price);
+        });
       });
-    });
+      route.params.subscribe(params => {
+        const pizzaId: number | undefined = params['Id'] !== undefined
+          ? Number(params['Id'])
+          : 0;
+        this.pizzaService.GetPizza(pizzaId).subscribe(value => {
+          this.pizza = value;
+          this.ingredientService.getIngredients().subscribe(values => {
+            values.forEach(element => {
+              if (this.pizza.ingredients.findIndex(ingredient => ingredient.id === element.id) === -1) {
+                this.ingredietns.push(element);
+              }
+            });
+          });
+          this.pizza.prices.forEach(price => {
+            const index = this.prices.findIndex(oldPrice =>
+              oldPrice.doughThickness === price.doughThickness && oldPrice.size === price.size);
+            if (index !== -1) {
+              price.checked = true;
+              if (price.size === PizzaSize.Small) {
+                this.smallPizza = true;
+              } else if (price.size === PizzaSize.Middle) {
+                this.mediumPizza = true;
+              } else if (price.size === PizzaSize.Big) {
+                this.bigPizza = true;
+              }
+              this.prices[index] = price;
+            }
+          });
+          if (this.pizza.imgPath !== '') {
+            this.imageSerivce.getImage(this.pizza.imgPath).subscribe(
+                imageValue => {
+                  const reader = new FileReader();
+                  reader.readAsDataURL(imageValue);
+                  reader.onload = (event1) => {
+                    this.image = event1.target.result as ArrayBuffer;
+                  };
+                }
+            );
+          }
+        });
+      });
   }
 
   public getPrice(thickness: DoughThickness, size: PizzaSize): PriceDto {
@@ -70,11 +116,6 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnInit(): void {
-    this.smallPizza = false;
-    this.mediumPizza = false;
-    this.bigPizza = false;
-    this.pizza.ingredients = [];
-    this.pizza.prices = [];
   }
 
   ngOnDestroy(): void {
@@ -131,11 +172,11 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     reader.onload = (event1) => {
       this.image = event1.target.result as ArrayBuffer;
     };
+    this.imageСhanged = true;
   }
 
   public savePizza() {
     this.pizza.prices = [];
-    this.pizza.imgPath = '';
     this.prices.forEach(value => {
       if (value.checked) {
         this.pizza.prices.push(value);
@@ -148,14 +189,21 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
       this.error = true;
       return;
     }
-    if (this.image) {
-      const fd = new FormData();
-      fd.append(this.imageFile.name, this.imageFile);
-      this.imageSerivce.saveImage(fd).subscribe(value => {
-        this.pizza.imgPath = value;
-      });
+    if (this.imageСhanged) {
+      console.log('сохраннено');
+      if (this.image) {
+        const fd = new FormData();
+        fd.append(this.imageFile.name, this.imageFile);
+        this.imageSerivce.saveImage(fd).subscribe(value => {
+          this.pizza.imgPath = value;
+          console.log(this.pizza);
+        });
+      } else {
+        this.pizza.imgPath = '';
+        console.log(this.pizza);
+      }
     }
-    this.error = false;
     console.log(this.pizza);
+    this.error = false;
   }
 }
