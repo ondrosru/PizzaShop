@@ -24,7 +24,7 @@ namespace PizzaShopAdmin.Controllers
         [Authorize(Policy = Policies.Admin)]
         public PizzaDto SavePizza([FromBody] PizzaDto pizza)
         {
-            return new PizzaDto();
+            return _pizzaService.SavePizza(pizza);
         }
 
         [HttpGet]

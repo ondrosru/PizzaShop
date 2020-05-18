@@ -1,6 +1,8 @@
 <div class="modal-block">
     <ng-template popup-host></ng-template>
 </div>
+<h1 *ngIf="pizza.id == 0">Добавление пиццы</h1>
+<h1 *ngIf="pizza.id != 0">Редактирование пиццы</h1>
 <form>
     <div class="d-flex flex-rot mt-3">
         <div class="d-flex flex-column mr-5">
@@ -34,11 +36,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="ThinSmallPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Small).weight">
+                        <input type="number" matInput name="ThinSmallPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Small).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="ThinSmallPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Small).cost">
+                        <input type="number" matInput name="ThinSmallPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Small).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -47,11 +49,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="ThinTraditionalPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Small).weight">
+                        <input type="number" matInput name="ThinTraditionalPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Small).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="ThinTraditionalPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Small).cost">
+                        <input type="number" matInput name="ThinTraditionalPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Small).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -60,11 +62,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="FatSmallPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Small).weight">
+                        <input type="number" matInput name="FatSmallPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Small).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="FatSmallPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Small).cost">
+                        <input type="number" matInput name="FatSmallPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Small).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -84,11 +86,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="ThinMiddlePrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Middle).weight">
+                        <input type="number" matInput name="ThinMiddlePrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Middle).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="ThinMiddlePrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Middle).cost">
+                        <input type="number" matInput name="ThinMiddlePrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Middle).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -97,11 +99,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="TraditionalMiddlePrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Middle).weight">
+                        <input type="number" matInput name="TraditionalMiddlePrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Middle).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="TraditionalMiddlePrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Middle).cost">
+                        <input type="number" matInput name="TraditionalMiddlePrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Middle).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -110,11 +112,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="FatMiddlePrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Middle).weight">
+                        <input type="number" matInput name="FatMiddlePrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Middle).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="FatMiddlePrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Middle).cost">
+                        <input type="number" matInput name="FatMiddlePrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Middle).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -134,11 +136,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="ThinBigWeight" [(ngModel)]="getPrice(thickness.Thin, sizes.Big).weight">
+                        <input type="number" matInput name="ThinBigWeight" [(ngModel)]="getPrice(thickness.Thin, sizes.Big).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="ThinBigPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Big).cost">
+                        <input type="number" matInput name="ThinBigPrice" [(ngModel)]="getPrice(thickness.Thin, sizes.Big).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -147,11 +149,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="TraditionalBigWeight" [(ngModel)]="getPrice(thickness.Traditional, sizes.Big).weight">
+                        <input type="number" matInput name="TraditionalBigWeight" [(ngModel)]="getPrice(thickness.Traditional, sizes.Big).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="TraditionalBigPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Big).cost">
+                        <input type="number" matInput name="TraditionalBigPrice" [(ngModel)]="getPrice(thickness.Traditional, sizes.Big).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -160,11 +162,11 @@
                 <div class="d-flex flex-row">
                     <mat-form-field appearance="fill" class="w-100 mr-3">
                         <mat-label>Вес(г.)</mat-label>
-                        <input matInput name="FatBigWeight" [(ngModel)]="getPrice(thickness.Fat, sizes.Big).weight">
+                        <input type="number" matInput name="FatBigWeight" [(ngModel)]="getPrice(thickness.Fat, sizes.Big).weight">
                     </mat-form-field>
                     <mat-form-field appearance="fill" class="w-100">
                         <mat-label>Цена</mat-label>
-                        <input matInput name="FatBigPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Big).cost">
+                        <input type="number" matInput name="FatBigPrice" [(ngModel)]="getPrice(thickness.Fat, sizes.Big).cost">
                     </mat-form-field>
                 </div>
             </div>
@@ -183,8 +185,11 @@
     </div>
     <mat-error *ngIf="error" class="w-100">Заполните название, описание и хотя бы одну цену. Добавтье ингредиенты.</mat-error>
     <div class="mt-5 d-flex flex-row">
-        <button class="btn" type="submit" mat-raised-button color="primary" (click)="savePizza()">
+        <button *ngIf="pizza.id == 0" class="btn" type="submit" mat-raised-button color="primary" (click)="savePizza()">
             Сохранить
+        </button>
+        <button *ngIf="pizza.id != 0" class="btn" type="submit" mat-raised-button color="primary" (click)="savePizza()">
+            Изменить
         </button>
         <button class="btn bg-danger ml-1" type="button" mat-raised-button color="primary"
             [routerLink]="[ '/admin/pizza-list' ]">

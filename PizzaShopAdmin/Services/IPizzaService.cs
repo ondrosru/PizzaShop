@@ -7,5 +7,6 @@ namespace PizzaShopAdmin.Services
     {
         PizzaDto GetPizza(int id);
         List<PizzaDto> GetPizzas();
+        PizzaDto SavePizza(PizzaDto newPizza);
     }
 }

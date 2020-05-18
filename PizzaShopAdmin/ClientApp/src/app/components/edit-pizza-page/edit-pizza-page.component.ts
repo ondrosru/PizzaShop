@@ -12,6 +12,7 @@ import { DoughThickness } from 'src/dto/Pizza/Enums/DoughThickness';
 import { ImageService } from 'src/app/HttpServices/ImageService';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PizzaService } from 'src/app/HttpServices/PizzaSerivce';
+import { FormControl, FormBuilder } from '@angular/forms';
 
 export interface PopupComponent {
   data: any;
@@ -30,7 +31,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
   private prices: PriceDto[];
   private thickness = DoughThickness;
   private ingredietns: IngredientDto[];
-  private pizza: PizzaDto = new PizzaDto();
+  private pizza: PizzaDto;
   @ViewChild(PopupDirective) popupHost: PopupDirective;
   private imageFile: File;
   private imageСhanged: boolean;
@@ -48,6 +49,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private pizzaService: PizzaService,
     private route: ActivatedRoute,
     private router: Router) {
+      this.pizza = new PizzaDto();
       this.imageСhanged = false;
       this.smallPizza = false;
       this.mediumPizza = false;
@@ -59,6 +61,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
         Object.keys(DoughThickness).filter((type) => isNaN(<any>type) && type !== 'values').forEach(thicknes => {
           const price = new PriceDto();
           price.doughThickness = DoughThickness[thicknes];
+          price.id = 0,
           price.size = PizzaSize[size];
           price.cost = 0;
           price.weight = 0;
@@ -94,7 +97,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
               this.prices[index] = price;
             }
           });
-          if (this.pizza.imgPath !== '') {
+          if (this.pizza.imgPath !== '' && this.pizza.imgPath ) {
             this.imageSerivce.getImage(this.pizza.imgPath).subscribe(
                 imageValue => {
                   const reader = new FileReader();
@@ -190,20 +193,26 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
       return;
     }
     if (this.imageСhanged) {
-      console.log('сохраннено');
-      if (this.image) {
         const fd = new FormData();
         fd.append(this.imageFile.name, this.imageFile);
         this.imageSerivce.saveImage(fd).subscribe(value => {
           this.pizza.imgPath = value;
-          console.log(this.pizza);
+          this.pizzaService.SavePizza(this.pizza).subscribe( responsValue => {
+            this._router.navigate(['/admin/pizza-list']);
+          });
+        });
+    } else {
+      if (this.image) {
+        this.pizzaService.SavePizza(this.pizza).subscribe( responsValue => {
+          this._router.navigate(['/admin/pizza-list']);
         });
       } else {
         this.pizza.imgPath = '';
-        console.log(this.pizza);
+        this.pizzaService.SavePizza(this.pizza).subscribe( responsValue => {
+          this._router.navigate(['/admin/pizza-list']);
+        });
       }
     }
-    console.log(this.pizza);
     this.error = false;
   }
 }

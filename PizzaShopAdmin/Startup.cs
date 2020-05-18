@@ -69,6 +69,8 @@ namespace PizzaShopAdmin
             services.AddScoped<IPizzaRepository, PizzaRepository>();
 
             services.AddScoped<IRepository<Pizza>, GenericRepository<Pizza>>();
+            services.AddScoped<IPizzaIngredientRepository, PizzaIngredientRepository>();
+            services.AddScoped<IRepository<Price>, GenericRepository<Price>>();
 
             services.AddScoped<IRepository<Ingredient>, GenericRepository<Ingredient>>();
             services.AddScoped<IIngredientService, IngredientSerivce>();
