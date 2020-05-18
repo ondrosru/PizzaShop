@@ -25,7 +25,6 @@ export interface PopupComponent {
   providers: [IngredientService, ImageService, PizzaService]
 })
 export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy {
-  private _router: Router;
   subscription: Subscription;
   private sizes = PizzaSize;
   private prices: PriceDto[];
@@ -48,7 +47,7 @@ export class EditPizzaPageComponent implements OnInit, AfterViewInit, OnDestroy 
     private imageSerivce: ImageService,
     private pizzaService: PizzaService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private _router: Router) {
       this.pizza = new PizzaDto();
       this.imageСhanged = false;
       this.smallPizza = false;

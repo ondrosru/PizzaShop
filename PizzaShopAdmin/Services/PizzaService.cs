@@ -46,68 +46,83 @@ namespace PizzaShopAdmin.Services
         public PizzaDto SavePizza(PizzaDto newPizza)
         {
             Pizza pizza = _pizzaRepository.GetPizza(newPizza.Id) ?? new Pizza { };
-            List<int> oldIngredientIds = new List<int>();
-            if (pizza.PizzaIngredients != null)
-            {
-                foreach (PizzaIngredient ingredient in pizza.PizzaIngredients)
-                {
-                    oldIngredientIds.Add(ingredient.Ingredient.Id);
-                }
-            }
-            List<int> oldPriceIds = new List<int>();
-            if (pizza.Prices != null)
-            {
-                foreach (Price price in pizza.Prices)
-                {
-                    oldPriceIds.Add(price.Id);
-                }
-            }
             pizza.Name = newPizza.Name;
             pizza.Description = newPizza.Description;
             pizza.ImgPath = newPizza.ImgPath;
+            if (pizza.PizzaIngredients != null)
+            {
+                for (int i = 0; i < pizza.PizzaIngredients.Count; i++)
+                {
+                    IngredientDto ingredientData = newPizza.Ingredients.Find(value => value.Id == pizza.PizzaIngredients.ElementAt(i).Id);
+                    if (ingredientData == null)
+                    {
+                        _pizzaIngredientRepository.Delete(pizza.PizzaIngredients.ElementAt(i).Id);
+                    }
+                    else
+                    {
+                        PizzaIngredient pizzaIngredient = _pizzaIngredientRepository.GetItem(pizza.PizzaIngredients.ElementAt(i).Id);
+                        pizzaIngredient.IngredientId = ingredientData.Id;
+                        pizzaIngredient.Ingredient = null;
+                        _pizzaIngredientRepository.Save(pizzaIngredient);
+                    }
+                }
+            }
+            if (pizza.Prices != null)
+            {
+                for (int i = 0; i < pizza.Prices.Count; i++)
+                {
+                    PriceDto priceData = newPizza.Prices.Find(value => value.Id == pizza.Prices.ElementAt(i).Id);
+                    if (priceData == null)
+                    {
+                        _priceRepository.Delete(pizza.Prices.ElementAt(i).Id);
+                    }
+                    else
+                    {
+                        Price price = _priceRepository.GetItem(pizza.Prices.ElementAt(i).Id);
+                        price.DoughThickness = priceData.DoughThickness;
+                        price.Size = priceData.Size;
+                        price.Weight = priceData.Weight;
+                        price.Cost = priceData.Cost;
+                        _priceRepository.Save(price);
+                    }
+                }
+            }
             pizza = _pizzaRepository.Save(pizza);
-            foreach(IngredientDto ingredient in newPizza.Ingredients)
+            foreach (IngredientDto ingredient in newPizza.Ingredients)
             {
-                PizzaIngredient pizzaIngredient = _pizzaIngredientRepository.GetPizzaIngredient(pizza.Id, ingredient.Id) ?? new PizzaIngredient { };
-                pizzaIngredient.IngredientId = ingredient.Id;
-                pizzaIngredient.PizzaId = pizza.Id;
-                pizzaIngredient = _pizzaIngredientRepository.Save(pizzaIngredient);
-                Ingredient addedIngredient = new Ingredient
+                PizzaIngredient pizzaIngredient = null;
+                if (pizza.PizzaIngredients != null)
                 {
-                    Id = ingredient.Id,
-                    Name = ingredient.Name
-                };
-                pizzaIngredient.Ingredient = addedIngredient;
-                pizza.PizzaIngredients.Add(pizzaIngredient);
-            }
-            foreach (PriceDto newPrice in newPizza.Prices)
-            {
-                Price price = _priceRepository.GetItem(newPrice.Id) ?? new Price { };
-                price.PizzaId = pizza.Id;
-                price.Size = newPrice.Size;
-                price.DoughThickness = newPrice.DoughThickness;
-                price.Weight = newPrice.Weight;
-                price.Cost = newPrice.Cost;
-                price = _priceRepository.Save(price);
-                pizza.Prices.Add(price);
-            }
-
-            foreach (int oldId in oldIngredientIds)
-            {
-                List<PizzaIngredient> newIngredinet = pizza.PizzaIngredients.ToList();
-                if (newIngredinet.FindIndex(value => value.IngredientId == oldId && value.PizzaId == pizza.Id) == -1)
+                    pizzaIngredient = pizza.PizzaIngredients.Where(value => value.IngredientId == ingredient.Id).FirstOrDefault();
+                }
+                if (pizzaIngredient == null)
                 {
-                    _pizzaIngredientRepository.Delete(oldId);
+                    PizzaIngredient newPizzaIngredient = new PizzaIngredient
+                    {
+                        IngredientId = ingredient.Id,
+                        PizzaId = pizza.Id
+                    };
+                    _pizzaIngredientRepository.Save(newPizzaIngredient);
                 }
             }
-            foreach (int oldId in oldPriceIds)
+            foreach (PriceDto price in newPizza.Prices)
             {
-                List<Price> newPrices = pizza.Prices.ToList();
-                if (newPrices.FindIndex(value => value.Id == oldId) == -1)
+                Price oldPrice = _priceRepository.GetItem(price.Id);
+                if (oldPrice == null)
                 {
-                    _priceRepository.Delete(oldId);
+                    Price newPrice = new Price
+                    {
+                        Id = 0,
+                        DoughThickness = price.DoughThickness,
+                        Size = price.Size,
+                        Cost = price.Cost,
+                        Weight = price.Weight,
+                        PizzaId = pizza.Id,
+                    };
+                    _priceRepository.Save(newPrice);
                 }
             }
+            pizza = _pizzaRepository.GetPizza(pizza.Id);
             return ConvertPizza(pizza);
         }
 

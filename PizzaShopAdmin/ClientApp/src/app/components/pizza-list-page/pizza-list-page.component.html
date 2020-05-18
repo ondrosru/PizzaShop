@@ -19,10 +19,7 @@
                     <th scope="row">{{pizza.id}}</th>
                     <td>{{pizza.name}}</td>
                     <td class="text-right">
-                        <div class="btn-group" role="group" >
-                            <button type="button" class="btn btn-primary" [routerLink]="[ '/admin/pizza-list/edit-pizza', pizza.id]">Изменить</button>
-                            <button type="button" class="btn btn-danger">Удалить</button>
-                        </div>
+                        <button type="button" class="btn btn-primary" [routerLink]="[ '/admin/pizza-list/edit-pizza', pizza.id]">Изменить</button>
                     </td>
                 </tr>
             </tbody>
