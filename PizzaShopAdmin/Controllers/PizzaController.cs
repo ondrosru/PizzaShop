@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PizzaShopAdmin.Dto.Pizza;
 using PizzaShopAdmin.Models;
 using PizzaShopAdmin.Services;
@@ -14,9 +15,11 @@ namespace PizzaShopAdmin.Controllers
     public class PizzaController : Controller
     {
         private readonly IPizzaService _pizzaService;
-        public PizzaController(IPizzaService pizzaService)
+        private readonly IConfiguration _config;
+        public PizzaController(IPizzaService pizzaService, IConfiguration config)
         {
             _pizzaService = pizzaService;
+            _config = config;
         }
 
         [HttpPost]
@@ -24,6 +27,15 @@ namespace PizzaShopAdmin.Controllers
         [Authorize(Policy = Policies.Admin)]
         public PizzaDto SavePizza([FromBody] PizzaDto pizza)
         {
+            PizzaDto oldPizza = _pizzaService.GetPizza(pizza.Id);
+            if (oldPizza != null)
+            {
+                if (oldPizza.ImgPath != null && oldPizza.ImgPath != "" && oldPizza.ImgPath != pizza.ImgPath)
+                {
+                    string fullPath = _config["Image:Path"] + oldPizza.ImgPath;
+                    System.IO.File.Delete(fullPath);
+                }
+            }
             return _pizzaService.SavePizza(pizza);
         }
 

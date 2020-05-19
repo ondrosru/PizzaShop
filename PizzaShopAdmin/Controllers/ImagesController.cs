@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using PizzaShopAdmin.Models;
 using System;
 using System.IO;
@@ -12,8 +13,10 @@ namespace PizzaShopAdmin.Controllers
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
-        public ImagesController()
+        private readonly IConfiguration _config;
+        public ImagesController(IConfiguration config)
         {
+            _config = config;
         }
 
         [HttpPost]
@@ -24,7 +27,7 @@ namespace PizzaShopAdmin.Controllers
             try
             {
                 IFormFile file = Request.Form.Files[0];
-                string newPath = "D:\\Pictures\\PizzaShop";
+                string newPath = _config["Image:Path"];
                 if (!Directory.Exists(newPath))
                 {
                     Directory.CreateDirectory(newPath);
@@ -53,7 +56,7 @@ namespace PizzaShopAdmin.Controllers
         [Authorize(Policy = Policies.Admin)]
         public IActionResult LoadImage(string name)
         {
-            var filePath = "D:\\Pictures\\PizzaShop\\" + name;
+            var filePath = _config["Image:Path"] + name;
             byte[] b = System.IO.File.ReadAllBytes(filePath);
             return File(b, "image/jpeg");
         }
