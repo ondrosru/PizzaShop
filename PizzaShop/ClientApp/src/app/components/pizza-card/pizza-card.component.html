@@ -1,0 +1,14 @@
+<div *ngIf="pizzaData" class="pizza-card d-flex text-center flex-column">
+    <h5 class="pizza-name">{{pizzaData.name}}</h5>
+    <img class="pizza-image" *ngIf="image" [src]="image" />
+    <div>Размер:</div>
+    <select [(ngModel)]="selectedSize">
+        <option *ngFor="let size of selectSizes" [ngValue]="size">{{sizeConvertToString(size)}}</option>
+    </select>
+    <div>Толщина:</div>
+    <select [(ngModel)]="selectedThickness">
+        <option *ngFor="let thickness of selectThickness" [ngValue]="thickness">{{thicknessConvertToString(thickness)}}</option>
+    </select>
+    <div>Цена: {{selectedCost}}</div>
+    <button type="button" class="btn btn-secondary mt-2" (click)="toOrder()">Добавить в корзину</button>
+</div>

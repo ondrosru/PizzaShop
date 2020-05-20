@@ -1,0 +1,17 @@
+.pizza-card {
+    width: 200px;
+    padding: 5px 10px;
+    border: 1px solid #919292;
+    margin: 5px;
+    box-shadow: 0 0 5px #7e8082;
+    border-radius: 4px;
+}
+
+.pizza-name {
+    font-size: 15px;
+}
+
+.pizza-image {
+    height: 180px;
+    overflow: hidden;
+}

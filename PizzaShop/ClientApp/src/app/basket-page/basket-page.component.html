@@ -1,0 +1,34 @@
+<div>
+    <div class="page-header">
+        <h1>Корзина</h1>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Размер</th>
+                    <th scope="col">Толщина</th>
+                    <th scope="col">Количество</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let pizza of selectedPizzas">
+                    <th scope="row">{{pizza.name}}</th>
+                    <td>{{pizza.description}}</td>
+                    <td>{{sizeConvertToString(getPrice(pizza.prices).size)}}</td>
+                    <td>{{thicknessConvertToString(getPrice(pizza.prices).thickness)}}</td>
+                    <td>{{getPrice(pizza.prices).count}}</td>
+                    <td>{{getPrice(pizza.prices).cost * getPrice(pizza.prices).count}}</td>
+                    <td>
+                        <i class="icon fa fa-plus" aria-hidden="true" (click)="increaseAmount(pizza, getPrice(pizza.prices))"></i>
+                        <i class="icon fa fa-minus" aria-hidden="true" (click)="reduceAmount(pizza, getPrice(pizza.prices))"></i>
+                    <td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
