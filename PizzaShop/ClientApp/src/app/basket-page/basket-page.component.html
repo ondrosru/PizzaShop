@@ -2,6 +2,28 @@
     <div class="page-header">
         <h1>Корзина</h1>
     </div>
+    <div class="d-flex flex-column w-100" [formGroup]="form">
+        <mat-form-field>
+            <mat-label>Имя</mat-label>
+            <input matInput placeholder="Имя" formControlName="name" required>
+            <mat-error *ngIf="hasError('name', 'required')">Введите имя</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Фамилия</mat-label>
+            <input matInput placeholder="Фамилия" formControlName="surname" required>
+            <mat-error *ngIf="hasError('surname', 'required')">Введите фамилию</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Номер телефона</mat-label>
+            <input matInput placeholder="Номер телефон" formControlName="phone" required>
+            <mat-error *ngIf="hasError('phone', 'required')">Введите телефон</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Адрес</mat-label>
+            <input matInput placeholder="Адрес" formControlName="address" required>
+            <mat-error *ngIf="hasError('address', 'required')">Введите адрес</mat-error>
+        </mat-form-field>
+    </div>
     <div>
         <table class="table table-striped">
             <thead>
@@ -15,8 +37,9 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
+            <mat-error *ngIf="order.pizzas.length === 0">Добавить в корзину хотя бы одну пиццу</mat-error>
             <tbody>
-                <tr *ngFor="let pizza of selectedPizzas">
+                <tr *ngFor="let pizza of order.pizzas">
                     <th scope="row">{{pizza.name}}</th>
                     <td>{{pizza.description}}</td>
                     <td>{{sizeConvertToString(getPrice(pizza.prices).size)}}</td>
@@ -24,11 +47,15 @@
                     <td>{{getPrice(pizza.prices).count}}</td>
                     <td>{{getPrice(pizza.prices).cost * getPrice(pizza.prices).count}}</td>
                     <td>
-                        <i class="icon fa fa-plus" aria-hidden="true" (click)="increaseAmount(pizza, getPrice(pizza.prices))"></i>
-                        <i class="icon fa fa-minus" aria-hidden="true" (click)="reduceAmount(pizza, getPrice(pizza.prices))"></i>
+                        <i class="icon fa fa-plus" aria-hidden="true"
+                            (click)="increaseAmount(pizza, getPrice(pizza.prices))"></i>
+                        <i class="icon fa fa-minus" aria-hidden="true"
+                            (click)="reduceAmount(pizza, getPrice(pizza.prices))"></i>
                     <td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <h4>Общая цена: {{getTotalPrice()}}</h4>
+    <button class="btn btn-primary" (click)="saveOrder()">Заказать</button>
 </div>

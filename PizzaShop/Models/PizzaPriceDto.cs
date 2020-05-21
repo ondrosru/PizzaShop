@@ -9,5 +9,6 @@ namespace PizzaShop.Models
         public DoughThickness Thickness { get; set; }
         public float Cost { get; set; }
         public int Weight { get; set; }
+        public int? Count { get; set; }
     }
 }
