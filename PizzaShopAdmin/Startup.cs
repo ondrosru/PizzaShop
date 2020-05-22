@@ -74,6 +74,9 @@ namespace PizzaShopAdmin
 
             services.AddScoped<IRepository<Ingredient>, GenericRepository<Ingredient>>();
             services.AddScoped<IIngredientService, IngredientSerivce>();
+            services.AddScoped<IRepository<Order>, GenericRepository<Order>>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IRepository<OrderPrice>, GenericRepository<OrderPrice>>();
             
 
             services.AddControllersWithViews();

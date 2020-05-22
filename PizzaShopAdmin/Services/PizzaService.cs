@@ -2,6 +2,7 @@
 using PizzaShop.EntityFramework.Repositories;
 using PizzaShopAdmin.Dto.Ingredient;
 using PizzaShopAdmin.Dto.Pizza;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,15 +13,15 @@ namespace PizzaShopAdmin.Services
         private readonly IPizzaRepository _pizzaRepository;
         private readonly IPizzaIngredientRepository _pizzaIngredientRepository;
         private readonly IRepository<Price> _priceRepository;
-        private readonly IRepository<Ingredient> _ingredientRepository;
+        private readonly IRepository<OrderPrice> _orderPriceRepository;
 
         public PizzaService(IPizzaRepository pizzaRepository, IPizzaIngredientRepository pizzaIngredientRepository,
-            IRepository<Price> priceRepository, IRepository<Ingredient> ingredientRepository)
+            IRepository<Price> priceRepository, IRepository<OrderPrice> orderPriceRepository)
         {
             _pizzaRepository = pizzaRepository;
             _pizzaIngredientRepository = pizzaIngredientRepository;
             _priceRepository = priceRepository;
-            _ingredientRepository = ingredientRepository;
+            _orderPriceRepository = orderPriceRepository;
         }
 
         public PizzaDto GetPizza(int id)
@@ -35,6 +36,30 @@ namespace PizzaShopAdmin.Services
             }
             Pizza pizza = _pizzaRepository.GetPizza(id);
             return ConvertPizza(pizza);
+        }
+
+        public List<PizzaDto> GetPizzaAtPriceOrderIds(int[] ids)
+        {
+            List<PizzaDto> pizzas = new List<PizzaDto>();
+            ids.ToList().ForEach(id => {
+                OrderPrice orderPrice = _orderPriceRepository.GetItem(id);
+                Price price = _priceRepository.GetItem(orderPrice.PriceId);
+                Pizza pizza = _pizzaRepository.GetItem(price.PizzaId);
+                PizzaDto foundPizza = pizzas.Find(value => value.Id == pizza.Id);
+                if (foundPizza != null)
+                {
+                    PriceDto priceDto = ConverPrice(price);
+                    priceDto.Count = orderPrice.Count;
+                    foundPizza.Prices.Add(priceDto);
+                }
+                else
+                {
+                    PizzaDto pizzaDto = ConvertPizza(pizza);
+                    pizzaDto.Prices.First().Count = orderPrice.Count;
+                    pizzas.Add(pizzaDto);
+                }
+            });
+            return pizzas;
         }
 
         public List<PizzaDto> GetPizzas()
@@ -133,13 +158,19 @@ namespace PizzaShopAdmin.Services
                 Id = pizza.Id,
                 Name = pizza.Name,
                 Description = pizza.Description,
-                ImgPath = pizza.ImgPath,
-                Prices = pizza.Prices.ToList().ConvertAll(ConverPrice)
+                ImgPath = pizza.ImgPath
             };
-            convertedPizza.Ingredients = new List<IngredientDto>();
-            foreach (PizzaIngredient pizzaIngredient in pizza.PizzaIngredients)
+            if (pizza.Prices != null)
             {
-                convertedPizza.Ingredients.Add(ConvertIngredient(pizzaIngredient.Ingredient));
+                convertedPizza.Prices = pizza.Prices.ToList().ConvertAll(ConverPrice);
+            }
+            convertedPizza.Ingredients = new List<IngredientDto>();
+            if (pizza.PizzaIngredients != null)
+            {
+                foreach (PizzaIngredient pizzaIngredient in pizza.PizzaIngredients)
+                {
+                    convertedPizza.Ingredients.Add(ConvertIngredient(pizzaIngredient.Ingredient));
+                }
             }
             return convertedPizza;
         }

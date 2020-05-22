@@ -25,4 +25,8 @@ export class PizzaService {
   public SavePizza(pizza: PizzaDto): Observable<PizzaDto> {
     return this._httpService.post<PizzaDto, PizzaDto>('api/Pizza/SavePizza', pizza);
   }
+
+  public GetPizzasAtPriceOrderIds(orderPriceId: number[]): Observable<PizzaDto[]> {
+    return this._httpService.post<number[], PizzaDto[]>('api/Pizza/GetPizzasAtPriceOrderIds', orderPriceId);
+  }
 }

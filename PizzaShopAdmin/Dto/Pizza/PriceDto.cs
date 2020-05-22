@@ -9,5 +9,6 @@ namespace PizzaShopAdmin.Dto.Pizza
         public DoughThickness DoughThickness { get; set; }
         public float Cost { get; set; }
         public int Weight { get; set; }
+        public int? Count { get; set; }
     }
 }

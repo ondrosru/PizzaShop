@@ -1,0 +1,30 @@
+<div *ngIf="order" class="d-flex flex-column">
+    <div>Номер заказа: {{order.id}}</div>
+    <div>Имя: {{order.name}}</div>
+    <div>Фамилия: {{order.surname}}</div>
+    <div>Телефон: {{order.phone}}</div>
+    <div>Адрес: {{order.address}}</div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Толщина</th>
+                <th scope="col">Размер</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Цена одного</th>
+                <th scope="col">Цена</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let price of getPrices()">
+                <th scope="row">{{getPizzaName(price)}}</th>
+                <td>{{thicknessConvertToString(price.doughThickness)}}</td>
+                <td>{{sizeConvertToString(price.size)}}</td>
+                <td>{{price.count}}</td>
+                <td>{{price.cost}}</td>
+                <td>{{price.count * price.cost}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <h5>Общая цена: {{order.total}}</h5>
+</div>

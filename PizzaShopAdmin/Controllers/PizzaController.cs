@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using PizzaShopAdmin.Dto.Pizza;
 using PizzaShopAdmin.Models;
 using PizzaShopAdmin.Services;
+using System;
 using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,6 +46,14 @@ namespace PizzaShopAdmin.Controllers
         public PizzaDto GetPizza(int id)
         {
             return _pizzaService.GetPizza(id);
+        }
+
+        [HttpPost]
+        [Route("GetPizzasAtPriceOrderIds")]
+        [Authorize(Policy = Policies.Admin)]
+        public List<PizzaDto> GetPizzasAtPriceOrderIds([FromBody] int[] orderPriceId)
+        {
+            return _pizzaService.GetPizzaAtPriceOrderIds(orderPriceId);
         }
 
         [HttpGet]

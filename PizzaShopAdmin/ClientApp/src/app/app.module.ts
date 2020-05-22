@@ -28,6 +28,8 @@ import { PopupDirective } from './components/popupDirective';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ImageService } from './HttpServices/ImageService';
+import { CommonModule } from '@angular/common';
+import { OrderPageComponent } from './components/order-page/order-page.component';
 
 
 @NgModule({
@@ -43,7 +45,8 @@ import { ImageService } from './HttpServices/ImageService';
     EditPizzaPageComponent,
     OrderListPageComponent,
     AddIngredientComponent,
-    PopupDirective
+    PopupDirective,
+    OrderPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -58,7 +61,8 @@ import { ImageService } from './HttpServices/ImageService';
     MatButtonModule,
     MatSelectModule,
     ScrollingModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    CommonModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true},

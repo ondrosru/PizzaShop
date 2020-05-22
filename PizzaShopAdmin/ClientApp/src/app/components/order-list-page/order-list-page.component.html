@@ -1,1 +1,29 @@
-<p>order-list-page works!</p>
+<div>
+    <div class="page-header">
+        <h1>Список заказов</h1>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Телефон</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <th scope="row">{{order.id}}</th>
+                    <td>{{order.name}}</td>
+                    <td>{{order.surname}}</td>
+                    <td>{{order.phone}}</td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-primary" [routerLink]="[ '/admin/order-list/order', order.id]">Подробнее</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
